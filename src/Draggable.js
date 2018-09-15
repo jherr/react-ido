@@ -8,7 +8,7 @@ export default (Comp) => {
   
       return connectDragSource(
         <div>
-          <Comp {...this.props} />
+          <Comp children={this.props.children} />
         </div>
       );
     }

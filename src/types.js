@@ -4,8 +4,8 @@ export const widgetType = PropTypes.shape({
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   icon: PropTypes.string.isRequired,
-  editComponent: PropTypes.func.isRequired,
-  renderComponent: PropTypes.func.isRequired,
+  editComponent: PropTypes.func,
+  component: PropTypes.func.isRequired,
 });
 
 export const elementType = PropTypes.shape({

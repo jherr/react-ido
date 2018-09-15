@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import styled from 'react-emotion';
 
 import Target from './Target';
+import Draggable from './Draggable';
 
 import { elementType, managerType } from './types';
 
@@ -48,10 +49,12 @@ const ElementInterior = styled('div')`
   flex-grow: 1;
 `;
 
+const DraggableEditableElementContainer = Draggable(EditableElementContainer);
+
 class EditableElementBase extends Component {
   render() {
     const { element, manager, last } = this.props;
-    const Comp = this.props.typeMap[element.type].editComponent;
+    const Comp = this.props.typeMap[element.type].editComponent || this.props.typeMap[element.type].component;
     return (
       <div
         className={`col-${element.width} rounded`}
@@ -59,7 +62,13 @@ class EditableElementBase extends Component {
           padding: 2,
         }}
       >
-        <EditableElementContainer>
+        <DraggableEditableElementContainer
+          onEndDrag={this.props.onEndDrag}
+          onBeginDrag={this.props.onBeginDrag}
+          manager={this.props.manager}
+          element={element}
+          id={element.id}
+        >
           <TitleBar>
             <div>
               <button
@@ -121,9 +130,6 @@ class EditableElementBase extends Component {
             />
             <ElementInterior>
               <Comp
-                onEndDrag={this.props.onEndDrag}
-                onBeginDrag={this.props.onBeginDrag}
-                manager={this.props.manager}
                 element={element}
                 id={element.id}
                 editMode={this.props.editMode}
@@ -150,7 +156,7 @@ class EditableElementBase extends Component {
               />
             )}
           </ElementContainer>
-        </EditableElementContainer>
+        </DraggableEditableElementContainer>
       </div>
     );
   }

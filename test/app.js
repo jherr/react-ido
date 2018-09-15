@@ -1,94 +1,46 @@
 import React, { Component } from 'react';
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
-import { Input, Label, FormGroup, Form } from 'reactstrap';
-import { observer } from 'mobx-react';
+import { Input, Label } from 'reactstrap';
 
 import {
   Palette,
   EditableRender,
   StaticRender,
-  Draggable,
   SurfaceManager,
+  IdoSurface,
+  InlineEditable,
 } from '../src';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@icon/open-iconic/open-iconic.css';
 
-class Field extends Component {
-  render() {
-    return (
-      <div
-        style={{
-          margin: 5,
-        }}
-      >
-        {this.props.editMode ? (
-          <div
-            style={{
-              marginLeft: 20,
-            }}
-          >
-            <Form inline>
-              <FormGroup row>
-                <Label for={`${this.props.id}-value`}>
-                  {this.props.name}
-                </Label>
-                <Input
-                  id={`${this.props.id}-value`}
-                  type="text"
-                  value={this.props.element.data.value}
-                  onChange={
-                    ({ target: { value }}) => this.props.element.data.value = value
-                  }
-                />
-              </FormGroup>
-            </Form>
-            <Form inline>
-              <FormGroup row>
-                <Label for={`${this.props.id}-width`}>
-                  Width
-                </Label>
-                <Input
-                  id={`${this.props.id}-width`}
-                  type="select"
-                  value={this.props.element.width}
-                  onChange={
-                    ({ target: { value }}) => this.props.element.width = value
-                  }
-                >
-                  <option value="6">Half width</option>
-                  <option value="12">Full width</option>
-                </Input>
-              </FormGroup>
-            </Form>
-          </div>
-        ) : (
-          `${this.props.name}: ${this.props.value}`
-        )}
-      </div>
-    )
-  }
-}
+const Field = ({ name, value }) => (
+  <div>
+    {`${name}: ${value}`}
+  </div>
+);
 
-const FieldDraggable = Draggable(observer(Field));
+const EditableField = InlineEditable({
+  value: {
+    name: 'Value',
+  },
+})(Field);
 
-class Image extends Component {
-  render() {
-    return (
-      <img
-        className="rounded"
-        style={{
-          maxWidth: 500,
-        }}
-        alt="Probably a dog"
-        src={this.props.src}
-      />
-    );
-  }
-}
+const Image = ({ src }) => (
+  <img
+    className="rounded"
+    style={{
+      maxWidth: 500,
+    }}
+    alt="Probably a dog"
+    src={src}
+  />
+);
 
-const ImageDraggable = Draggable(Image);
+const EditableImage = InlineEditable({
+  src: {
+    name: 'Source',
+  },
+})(Image);
 
 const config = {
   widgets: [
@@ -96,8 +48,8 @@ const config = {
       type: 'field',
       name: 'Field',
       icon: 'list',
-      editComponent: FieldDraggable,
-      renderComponent: Field,
+      editComponent: EditableField,
+      component: Field,
       defaultValues: {
         name: 'Foo',
         value: 'Bar'
@@ -107,8 +59,8 @@ const config = {
       type: 'image',
       name: 'Image',
       icon: 'camera-slr',
-      editComponent: ImageDraggable,
-      renderComponent: Image,
+      editComponent: EditableImage,
+      component: Image,
       defaultValues: {
         src: 'https://images.pexels.com/photos/58997/pexels-photo-58997.jpeg',
       }
@@ -216,4 +168,4 @@ class App extends Component {
   }
 }
 
-export default DragDropContext(HTML5Backend)(App);
+export default IdoSurface(App);

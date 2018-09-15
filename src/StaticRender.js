@@ -13,7 +13,7 @@ const createTypeMap = ( { widgets } ) => {
 class StaticElement extends Component {
   render() {
     const { element } = this.props;
-    const Comp = this.props.typeMap[element.type].renderComponent;
+    const Comp = this.props.typeMap[element.type].component;
     return (
       <div
         className={`col-${element.width} rounded`}
