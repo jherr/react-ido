@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
+import styled from 'react-emotion';
 
-import { elementType, managerType } from './types';
+import { elementType, modelType } from '../types';
 
 const createTypeMap = ( { widgets } ) => {
   const map = {};
@@ -15,13 +16,9 @@ class StaticElement extends Component {
     const { element } = this.props;
     const Comp = this.props.typeMap[element.type].component;
     return (
-      <div
-        className={`col-${element.width} rounded`}
-      >
-        <Comp
-          {...element.data}
-        />
-      </div>
+      <Comp
+        {...element.data}
+      />
     );
   }
 };
@@ -33,6 +30,10 @@ StaticElement.propTypes = {
   last: PropTypes.bool,
 };
 
+const Row = styled('div')`
+  display: grid;
+`;
+
 class StaticRenderer extends Component {
   render() {
     const { manager } = this.props;
@@ -40,7 +41,12 @@ class StaticRenderer extends Component {
     return (
       <div>
         {manager.elements.map((row, index) => (
-          <div className="row" key={`row-${index}`}>
+          <Row
+            key={`row-${index}`}
+            style={{
+              gridTemplateColumns: `repeat(${row.length}, 1fr)`,
+            }}
+          >
             {
               row.map(element => (
                 <StaticElement
@@ -51,7 +57,7 @@ class StaticRenderer extends Component {
                 />
               ))
             }
-          </div>
+          </Row>
         ))}
       </div>
     );
@@ -59,7 +65,7 @@ class StaticRenderer extends Component {
 };
 
 StaticRenderer.propTypes = {
-  manager: managerType.isRequired,
+  manager: modelType.isRequired,
 };
 
 export default observer(StaticRenderer);

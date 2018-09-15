@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
-import { Input, Label } from 'reactstrap';
+import styled from 'react-emotion';
 
 import {
   Palette,
   EditableRender,
   StaticRender,
-  SurfaceManager,
+  IdoModel,
   IdoSurface,
   InlineEditable,
 } from '../src';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
 import '@icon/open-iconic/open-iconic.css';
 
 const Field = ({ name, value }) => (
@@ -112,7 +111,16 @@ const elements = [
   ]
 ];
 
-const sm = new SurfaceManager(config, elements);
+const sm = new IdoModel(config, elements);
+
+const MainContainer = styled('div')`
+  padding: 10px;
+  font-family: arial, verdana, sans-serif;
+`;
+const GridContainer = styled('div')`
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+`;
 
 class App extends Component {
   constructor(props) {
@@ -124,46 +132,37 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col-12">
-            <Label check>
-              <Input
-                type="checkbox"
-                id="checkbox2"
-                checked={this.state.editable}
-                onChange={() => this.setState({
-                  editable: !this.state.editable,
-                })}
+      <MainContainer>
+        <div>
+          <input
+            type="checkbox"
+            id="editable"
+            checked={this.state.editable}
+            onChange={() => this.setState({
+              editable: !this.state.editable,
+            })}
+          />
+          <label for="editable">
+            Editable
+          </label>
+        </div>
+        {this.state.editable ?
+          (
+            <GridContainer>
+              <Palette
+                manager={sm}
               />
-              Editable
-            </Label>
-          </div>
-        </div>
-        <div className="row">
-        {
-          this.state.editable ?
-            [
-              <div className="col-3" key="palette">
-                <Palette
-                  manager={sm}
-                />
-              </div>,
-              <div className="col-9" key="edit-area">
-                <EditableRender
-                  manager={sm}
-                />
-              </div>
-            ] : (
-              <div>
-                <StaticRender
-                  manager={sm}
-                />
-              </div>
-            )
+              <EditableRender
+                manager={sm}
+              />
+            </GridContainer>
+          ) : (
+            <StaticRender
+              manager={sm}
+            />
+          )
         }
-        </div>
-      </div>
+      </MainContainer>
     );
   }
 }

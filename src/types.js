@@ -19,7 +19,7 @@ export const configType = PropTypes.shape({
   widgets: PropTypes.arrayOf(widgetType),
 });
 
-export const managerType = PropTypes.shape({
+export const modelType = PropTypes.shape({
   config: configType,
   elements: elementsType,
   activeTarget: PropTypes.string.isRequired,

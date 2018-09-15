@@ -1,15 +1,15 @@
-import Palette from './Palette';
-import EditableRender from './EditableRender';
-import StaticRender from './StaticRender';
-import InlineEditable from './InlineEditable';
-import SurfaceManager from './SurfaceManager';
-import IdoSurface from './IdoSurface';
+import Palette from './components/Palette';
+import EditableRender from './renderers/EditableRender';
+import StaticRender from './renderers/StaticRender';
+import InlineEditable from './components/InlineEditable';
+import IdoModel from './model/IdoModel';
+import IdoSurface from './components/IdoSurface';
 
 export {
   Palette,
   EditableRender,
   StaticRender,
-  SurfaceManager,
+  IdoModel,
   IdoSurface,
   InlineEditable,
 };

@@ -3,7 +3,7 @@ import { DragSource } from 'react-dnd';
 import styled from 'react-emotion';
 import { observer } from 'mobx-react';
 
-import { widgetType, managerType } from './types';
+import { widgetType, modelType } from '../types';
 
 const Pill = styled('div')`
   border-radius: 5px;
@@ -71,7 +71,7 @@ class Palette extends Component {
 }
 
 Palette.propTypes = {
-  manager: managerType,
+  manager: modelType,
 };
 
 export default observer(Palette);

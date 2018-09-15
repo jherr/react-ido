@@ -10,16 +10,6 @@ export default class SurfaceManager {
     this.editMode = {};
   }
 
-  update(id, changes) {
-    const {
-      row,
-      index
-    } = this.findItem(id);
-    Object.keys(changes).forEach(k => {
-      this.elements[row][index].data[k] = changes[k];  
-    });
-  }
-
   toggleEditMode(id) {
     this.editMode[id] = !this.editMode[id];
   }
