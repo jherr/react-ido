@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import styled from 'react-emotion';
 
 import {
+  InlineEditable,
+  IdoSurface,
   Palette,
   EditableRender,
   StaticRender,
-  IdoModel,
-  IdoSurface,
-  InlineEditable,
 } from '../src';
 
 import '@icon/open-iconic/open-iconic.css';
@@ -111,8 +110,6 @@ const elements = [
   ]
 ];
 
-const sm = new IdoModel(config, elements);
-
 const MainContainer = styled('div')`
   padding: 10px;
   font-family: arial, verdana, sans-serif;
@@ -132,39 +129,39 @@ class App extends Component {
 
   render() {
     return (
-      <MainContainer>
-        <div>
-          <input
-            type="checkbox"
-            id="editable"
-            checked={this.state.editable}
-            onChange={() => this.setState({
-              editable: !this.state.editable,
-            })}
-          />
-          <label for="editable">
-            Editable
-          </label>
-        </div>
-        {this.state.editable ?
-          (
-            <GridContainer>
-              <Palette
-                manager={sm}
-              />
-              <EditableRender
-                manager={sm}
-              />
-            </GridContainer>
-          ) : (
-            <StaticRender
-              manager={sm}
+      <IdoSurface
+        config={config}
+        elements={elements}
+        onChange={(els) => console.log(`changed - has ${els.length} rows`)}
+      >
+        <MainContainer>
+          <div>
+            <input
+              type="checkbox"
+              id="editable"
+              checked={this.state.editable}
+              onChange={() => this.setState({
+                editable: !this.state.editable,
+              })}
             />
-          )
-        }
-      </MainContainer>
+            <label htmlFor="editable">
+              Editable
+            </label>
+          </div>
+          {this.state.editable ?
+            (
+              <GridContainer>
+                <Palette />
+                <EditableRender />
+              </GridContainer>
+            ) : (
+              <StaticRender />
+            )
+          }
+        </MainContainer>
+      </IdoSurface>
     );
   }
 }
 
-export default IdoSurface(App);
+export default App;

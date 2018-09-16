@@ -1,13 +1,14 @@
 import { observable, decorate } from 'mobx';
 import uuid from 'uuid/v1';
 
-export default class SurfaceManager {
-  constructor(config, elements) {
+export default class IdoModel {
+  constructor(config, elements, onChange) {
     this.config = config;
     this.elements = elements;
     this.activeTarget = '';
     this.isDragging = false;
     this.editMode = {};
+    this.onChange = onChange || (() => {});
   }
 
   toggleEditMode(id) {
@@ -31,6 +32,7 @@ export default class SurfaceManager {
     } = this.findItem(id);
     this.elements[row].splice(index, 1);
     this.pruneElements();
+    this.onChange(this.elements);
   }
 
   onDrop(source, target) {
@@ -49,6 +51,7 @@ export default class SurfaceManager {
     }
 
     this.pruneElements();
+    this.onChange(this.elements);
   }
 
   pruneElements() {
@@ -119,7 +122,7 @@ export default class SurfaceManager {
   }
 }
 
-decorate(SurfaceManager, {
+decorate(IdoModel, {
   config: observable,
   elements: observable,
   activeTarget: observable,

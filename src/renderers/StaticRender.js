@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import styled from 'react-emotion';
 
+import IdoContext from '../model/IdoContext';
 import { elementType, modelType } from '../types';
 
 const createTypeMap = ( { widgets } ) => {
@@ -31,7 +32,10 @@ StaticElement.propTypes = {
 };
 
 const Row = styled('div')`
-  display: grid;
+  display: block;
+  @media (min-width: 420px) {
+    display: grid;
+  }
 `;
 
 class StaticRenderer extends Component {
@@ -68,4 +72,10 @@ StaticRenderer.propTypes = {
   manager: modelType.isRequired,
 };
 
-export default observer(StaticRenderer);
+const ObservedStaticRenderer = observer(StaticRenderer);
+
+export default () => (
+  <IdoContext.Consumer>
+    {manager => <ObservedStaticRenderer manager={manager} />}
+  </IdoContext.Consumer>
+);

@@ -4,6 +4,7 @@ import styled from 'react-emotion';
 
 import EditableElement from '../components/EditableElement';
 import Target from '../components/Target';
+import IdoContext from '../model/IdoContext';
 
 import { modelType } from '../types';
 
@@ -75,4 +76,10 @@ EditableRender.propTypes = {
   manager: modelType.isRequired,
 };
 
-export default observer(EditableRender);
+const ObservedRenderer = observer(EditableRender);
+
+export default () => (
+  <IdoContext.Consumer>
+    {manager => <ObservedRenderer manager={manager} />}
+  </IdoContext.Consumer>
+);

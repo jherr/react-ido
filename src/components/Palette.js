@@ -3,6 +3,7 @@ import { DragSource } from 'react-dnd';
 import styled from 'react-emotion';
 import { observer } from 'mobx-react';
 
+import IdoContext from '../model/IdoContext';
 import { widgetType, modelType } from '../types';
 
 const Pill = styled('div')`
@@ -74,4 +75,10 @@ Palette.propTypes = {
   manager: modelType,
 };
 
-export default observer(Palette);
+const ObserverPalette = observer(Palette);
+
+export default () => (
+  <IdoContext.Consumer>
+    {(manager) => <ObserverPalette manager={manager} />}
+  </IdoContext.Consumer>
+);
