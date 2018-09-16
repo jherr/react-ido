@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { DragSource } from 'react-dnd';
 import styled from 'react-emotion';
 import { observer } from 'mobx-react';
+import PropTypes from 'prop-types';
 
 import IdoContext from '../model/IdoContext';
 import { widgetType, modelType } from '../types';
@@ -28,17 +29,18 @@ class PaletteWidgetBase extends Component {
           />
           {this.props.widget.name}
         </Pill>
-      </div>
+      </div>,
     );
   }
 }
 
 PaletteWidgetBase.propTypes = {
   widget: widgetType.isRequired,
+  connectDragSource: PropTypes.func.isRequired,
 };
 
 const PaletteWidget = DragSource('field', {
-  beginDrag( { manager, id, widget } ) {
+  beginDrag({ manager, id, widget }) {
     manager.onBeginDrag();
     const item = {
       id,
@@ -48,37 +50,33 @@ const PaletteWidget = DragSource('field', {
     return item;
   },
 
-  endDrag(props, monitor, component) {
+  endDrag(props) {
     props.manager.onEndDrag();
-  }
-}, (connect) => ({
+  },
+}, connect => ({
   connectDragSource: connect.dragSource(),
 }))(PaletteWidgetBase);
 
-class Palette extends Component {
-  render() {
-    return (
-      <div>
-        {this.props.manager.config.widgets.map( widget =>
-          <PaletteWidget
-            widget={widget}
-            key={widget.name}
-            manager={this.props.manager}
-          />
-        )}
-      </div>
-    );
-  }
-}
+const Palette = ({ manager }) => (
+  <div>
+    {manager.config.widgets.map(widget => (
+      <PaletteWidget
+        widget={widget}
+        key={widget.name}
+        manager={manager}
+      />
+    ))}
+  </div>
+);
 
 Palette.propTypes = {
-  manager: modelType,
+  manager: modelType.isRequired,
 };
 
 const ObserverPalette = observer(Palette);
 
 export default () => (
   <IdoContext.Consumer>
-    {(manager) => <ObserverPalette manager={manager} />}
+    {manager => <ObserverPalette manager={manager} />}
   </IdoContext.Consumer>
 );

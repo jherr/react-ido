@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import styled from 'react-emotion';
@@ -6,29 +6,24 @@ import styled from 'react-emotion';
 import IdoContext from '../model/IdoContext';
 import { elementType, modelType } from '../types';
 
-const createTypeMap = ( { widgets } ) => {
+const createTypeMap = ({ widgets }) => {
   const map = {};
-  widgets.forEach( widget => map[ widget.type ] = widget );
+  widgets.forEach(widget => map[widget.type] = widget);
   return map;
 };
 
-class StaticElement extends Component {
-  render() {
-    const { element } = this.props;
-    const Comp = this.props.typeMap[element.type].component;
-    return (
-      <Comp
-        {...element.data}
-      />
-    );
-  }
+const StaticElement = ({ element, typeMap }) => {
+  const Comp = typeMap[element.type].component;
+  return (
+    <Comp
+      {...element.data}
+    />
+  );
 };
 
 StaticElement.propTypes = {
-  element: elementType,
-  typeMap: PropTypes.object,
-  onEndDrag: PropTypes.func.isRequired,
-  last: PropTypes.bool,
+  element: elementType.isRequired,
+  typeMap: PropTypes.object.isRequired,
 };
 
 const Row = styled('div')`
@@ -38,34 +33,31 @@ const Row = styled('div')`
   }
 `;
 
-class StaticRenderer extends Component {
-  render() {
-    const { manager } = this.props;
-    const typeMap = createTypeMap(manager.config);
-    return (
-      <div>
-        {manager.elements.map((row, index) => (
-          <Row
-            key={`row-${index}`}
-            style={{
-              gridTemplateColumns: `repeat(${row.length}, 1fr)`,
-            }}
-          >
-            {
-              row.map(element => (
-                <StaticElement
-                  element={element}
-                  typeMap={typeMap}
-                  key={element.id}
-                  manager={manager}
-                />
-              ))
-            }
-          </Row>
-        ))}
-      </div>
-    );
-  }
+const StaticRenderer = ({ manager }) => {
+  const typeMap = createTypeMap(manager.config);
+  return (
+    <div>
+      {manager.elements.map((row, index) => (
+        <Row
+          key={`row-${index}`}
+          style={{
+            gridTemplateColumns: `repeat(${row.length}, 1fr)`,
+          }}
+        >
+          {
+            row.map(element => (
+              <StaticElement
+                element={element}
+                typeMap={typeMap}
+                key={element.id}
+                manager={manager}
+              />
+            ))
+          }
+        </Row>
+      ))}
+    </div>
+  );
 };
 
 StaticRenderer.propTypes = {

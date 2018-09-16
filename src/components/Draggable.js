@@ -1,34 +1,38 @@
 import React, { Component } from 'react';
 import { DragSource } from 'react-dnd';
+import PropTypes from 'prop-types';
 
 export default (Comp) => {
   class ComponentEditable extends Component {
     render() {
-      const { connectDragSource } = this.props;
-  
+      const { connectDragSource, children } = this.props;
+
       return connectDragSource(
         <div>
-          <Comp children={this.props.children} />
-        </div>
+          <Comp>
+            {children}
+          </Comp>
+        </div>,
       );
     }
   }
-  
+
+  ComponentEditable.propTypes = {
+    connectDragSource: PropTypes.func.isRequired,
+    children: PropTypes.any.isRequired,
+  };
+
   return DragSource('field', {
     beginDrag(props) {
       props.onBeginDrag();
-      const item = { id: props.id };
-      return item;
+      return props.id;
     },
-  
-    endDrag(props, monitor, component) {
+
+    endDrag(props) {
       props.onEndDrag();
-      if (!monitor.didDrop()) {
-        return;
-      }
-    }
+    },
   }, (connect, monitor) => ({
     connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging()
+    isDragging: monitor.isDragging(),
   }))(ComponentEditable);
 };

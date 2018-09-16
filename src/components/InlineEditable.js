@@ -1,48 +1,50 @@
 
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'react-emotion';
 import { observer } from 'mobx-react';
+import PropTypes from 'prop-types';
+
+import { elementType } from '../types';
 
 const FormGrid = styled('div')`
   display: grid;
   grid: auto-flow / 25% 75%;
 `;
 
-class Editor extends Component {
-  render() {
-    return (
-      <FormGrid>
-        {Object.keys(this.props.fields).map(f => [
-          <label for={`${this.props.id}-${f}`}>
-            {this.props.fields[f].name}
-          </label>,
-          <input
-            id={`${this.props.id}-${f}`}
-            type="text"
-            value={this.props.element.data[f]}
-            onChange={
-              ({ target: { value }}) => this.props.element.data[f] = value
-            }
-          >
-          </input>
-        ])}
-      </FormGrid>
-    );
-  }
-}
+const Editor = ({ fields, id, element }) => (
+  <FormGrid>
+    {Object.keys(fields).map(f => [
+      <label htmlFor={`${id}-${f}`}>
+        {fields[f].name}
+      </label>,
+      <input
+        id={`${id}-${f}`}
+        type="text"
+        value={element.data[f]}
+        onChange={
+            ({ target: { value } }) => element.data[f] = value
+          }
+      />,
+    ])}
+  </FormGrid>
+);
+
+Editor.propTypes = {
+  id: PropTypes.string.isRequired,
+  fields: PropTypes.object.isRequired,
+  element: elementType.isRequired,
+};
 
 const OberservingEditor = observer(Editor);
 
-export default (fields) => (Comp) => (props) => {
-  return props.editMode ? (
-    <OberservingEditor
-      fields={fields}
-      element={props.element}
-      id={props.id}
-    />
-  ) : (
-    <Comp
-      {...props}
-    />
-  );
-}
+export default fields => Comp => props => (props.editMode ? (
+  <OberservingEditor
+    fields={fields}
+    element={props.element}
+    id={props.id}
+  />
+) : (
+  <Comp
+    {...props}
+  />
+));

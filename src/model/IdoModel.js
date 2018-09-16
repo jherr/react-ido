@@ -28,7 +28,7 @@ export default class IdoModel {
   onDelete(id) {
     const {
       row,
-      index
+      index,
     } = this.findItem(id);
     this.elements[row].splice(index, 1);
     this.pruneElements();
@@ -36,16 +36,23 @@ export default class IdoModel {
   }
 
   onDrop(source, target) {
+    const newElement = widget => ({
+      type: widget.type,
+      id: uuid(),
+      data: Object.assign(widget.defaultValues),
+      width: 12,
+    });
+
     this.activeTarget = '';
     if (source.source === 'palette') {
-      this.insertElement(target, this.newElement(source.widget));
-    } else if(source.id) {
+      this.insertElement(target, newElement(source.widget));
+    } else if (source.id) {
       const {
         row,
-        index
+        index,
       } = this.findItem(source.id);
 
-      const elementData = Object.assign( this.elements[row][index] );
+      const elementData = Object.assign(this.elements[row][index]);
       this.elements[row].splice(index, 1);
       this.insertElement(target, elementData);
     }
@@ -63,10 +70,10 @@ export default class IdoModel {
         }
       });
       return found;
-    }
+    };
 
     let emptyRow = findEmptyRowIndex();
-    while(emptyRow !== null) {
+    while (emptyRow !== null) {
       this.elements.splice(emptyRow, 1);
       emptyRow = findEmptyRowIndex();
     }
@@ -74,32 +81,32 @@ export default class IdoModel {
 
   insertElement(target, element) {
     if (target.id === 'after') {
-      this.elements.push([ element ]);
+      this.elements.push([element]);
     } else if (target.beforeRow !== undefined) {
       this.elements.splice(
         target.beforeRow,
         0,
-        [ element ]
+        [element],
       );
     } else if (target.beforeElement) {
       const {
         row,
-        index
+        index,
       } = this.findItem(target.beforeElement);
       this.elements[row].splice(index, 0, element);
     } else if (target.afterElement) {
       const {
         row,
-        index
+        index,
       } = this.findItem(target.afterElement);
       this.elements[row].splice(index + 1, 0, element);
     }
-  } 
+  }
 
   findItem(id) {
     const out = {
       row: null,
-      index: null
+      index: null,
     };
     this.elements.forEach((rowElements, row) => {
       rowElements.forEach((element, index) => {
@@ -110,15 +117,6 @@ export default class IdoModel {
       });
     });
     return out;
-  }
-
-  newElement(widget) {
-    return {
-      type: widget.type,
-      id: uuid(),
-      data: Object.assign(widget.defaultValues),
-      width: 12,
-    };
   }
 }
 

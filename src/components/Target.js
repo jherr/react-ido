@@ -1,48 +1,68 @@
-
 import React, { Component } from 'react';
 import { DropTarget } from 'react-dnd';
+import PropTypes from 'prop-types';
 
 class TargetBase extends Component {
   render() {
-    const { connectDropTarget } = this.props;
+    const {
+      connectDropTarget,
+      isDragging,
+      active,
+      style,
+      className,
+    } = this.props;
+
     const iconStyling = {
       width: 30,
       height: 30,
-      color: this.props.isDragging ? 'black' : '#ccc',
-      opacity: this.props.isDragging ? 1 : 0
+      color: isDragging ? 'black' : '#ccc',
+      opacity: isDragging ? 1 : 0,
     };
 
     return connectDropTarget(
       <div
         style={Object.assign(
-          this.props.style || {}, {
-            margin: this.props.active ? 0 : 2,
-            border: `${this.props.active ? '3px' : '1px'} dashed ${this.props.isDragging ? 'black' : '#ccc'}`,
+          style || {}, {
+            margin: active ? 0 : 2,
+            border: `${active ? '3px' : '1px'} dashed ${isDragging ? 'black' : '#ccc'}`,
             textAlign: 'center',
             borderRadius: 5,
-          }
+          },
         )}
-        className={this.props.className}
+        className={className}
       >
         <i
-          className={`oi oi-target`}
+          className="oi oi-target"
           style={iconStyling}
         />
-      </div>
+      </div>,
     );
   }
 }
 
+TargetBase.propTypes = {
+  connectDropTarget: PropTypes.func.isRequired,
+  isDragging: PropTypes.bool.isRequired,
+  className: PropTypes.string,
+  active: PropTypes.bool.isRequired,
+  style: PropTypes.object,
+};
+
+TargetBase.defaultProps = {
+  className: null,
+  style: null,
+};
+
 const Target = DropTarget('field', {
-  drop(props, monitor, component) {
+  drop(props, monitor) {
     props.onDrop(monitor.getItem(), props);
   },
-  hover(props, monitor, component) {
-    if(monitor.isOver()) {
+  hover(props, monitor) {
+    if (monitor.isOver()) {
       props.onActivate(props.id);
     }
-  }
-}, (connect, monitor) => ({
+  },
+}, connect => ({
   connectDropTarget: connect.dropTarget(),
 }))(TargetBase);
 
