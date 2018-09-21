@@ -1,0 +1,199 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditableRenderer should render 1`] = `
+Array [
+  <div>
+    <div>
+      <div
+        className="css-1i9po67"
+      >
+        <i
+          className="oi oi-list"
+          style={
+            Object {
+              "paddingRight": 5,
+            }
+          }
+        />
+        Field
+      </div>
+    </div>
+  </div>,
+  <div>
+    <div>
+      <div
+        className={null}
+        style={
+          Object {
+            "border": "1px dashed #ccc",
+            "borderRadius": 5,
+            "margin": 2,
+            "textAlign": "center",
+          }
+        }
+      >
+        <i
+          className="oi oi-target"
+          style={
+            Object {
+              "color": "#ccc",
+              "height": 30,
+              "opacity": 0,
+              "width": 30,
+            }
+          }
+        />
+      </div>
+    </div>
+    <div
+      className="css-chr1eq"
+      style={
+        Object {
+          "gridTemplateColumns": "repeat(1, 1fr)",
+        }
+      }
+    >
+      <div
+        className="rounded"
+        style={
+          Object {
+            "padding": 2,
+          }
+        }
+      >
+        <div>
+          <div
+            className="css-zpu786"
+          >
+            <div>
+              <button
+                className="css-7yzxl9"
+                onClick={[Function]}
+              >
+                <i
+                  className="oi oi-circle-x"
+                  style={
+                    Object {
+                      "color": "white",
+                      "height": 30,
+                      "width": 30,
+                    }
+                  }
+                />
+              </button>
+            </div>
+            <div
+              className="css-1paq4b3"
+            >
+              Field
+            </div>
+            <div>
+              <button
+                className="css-7yzxl9"
+                onClick={[Function]}
+              >
+                <i
+                  className="oi oi-cog"
+                  style={
+                    Object {
+                      "color": "white",
+                      "height": 30,
+                      "width": 30,
+                    }
+                  }
+                />
+              </button>
+            </div>
+            <div
+              className={null}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "border": "1px dashed #ccc",
+                  "borderRadius": 5,
+                  "display": "flex",
+                  "flexDirection": "column",
+                  "justifyContent": "space-around",
+                  "margin": 2,
+                  "padding": "2px 5px 2px 5px",
+                  "textAlign": "center",
+                }
+              }
+            >
+              <i
+                className="oi oi-target"
+                style={
+                  Object {
+                    "color": "#ccc",
+                    "height": 30,
+                    "opacity": 0,
+                    "width": 30,
+                  }
+                }
+              />
+            </div>
+            <div
+              className="css-xrwow"
+            >
+              <div>
+                Price: $20.00
+              </div>
+            </div>
+            <div
+              className={null}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "border": "1px dashed #ccc",
+                  "borderRadius": 5,
+                  "display": "flex",
+                  "flexDirection": "column",
+                  "justifyContent": "space-around",
+                  "margin": 2,
+                  "padding": "2px 5px 2px 5px",
+                  "textAlign": "center",
+                }
+              }
+            >
+              <i
+                className="oi oi-target"
+                style={
+                  Object {
+                    "color": "#ccc",
+                    "height": 30,
+                    "opacity": 0,
+                    "width": 30,
+                  }
+                }
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className={null}
+      style={
+        Object {
+          "border": "1px dashed #ccc",
+          "borderRadius": 5,
+          "margin": 2,
+          "textAlign": "center",
+        }
+      }
+    >
+      <i
+        className="oi oi-target"
+        style={
+          Object {
+            "color": "#ccc",
+            "height": 30,
+            "opacity": 0,
+            "width": 30,
+          }
+        }
+      />
+    </div>
+  </div>,
+]
+`;

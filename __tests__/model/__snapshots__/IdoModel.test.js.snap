@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IdoModel should handle a palette drop after an element 1`] = `
+Array [
+  Array [
+    Object {},
+    Object {},
+  ],
+]
+`;
+
+exports[`IdoModel should handle a palette drop after an element and fire onChange 1`] = `
+Array [
+  Array [
+    Object {},
+    Object {
+      "data": Object {},
+      "type": "foo",
+      "width": 12,
+    },
+  ],
+]
+`;
+
+exports[`IdoModel should handle a palette drop at the end 1`] = `
+Array [
+  Array [
+    Object {
+      "data": Object {},
+      "type": "foo",
+      "width": 12,
+    },
+  ],
+]
+`;
+
+exports[`IdoModel should handle a palette drop at the front 1`] = `
+Array [
+  Array [
+    Object {
+      "data": Object {},
+      "type": "foo",
+      "width": 12,
+    },
+  ],
+]
+`;
+
+exports[`IdoModel should handle a palette drop before an element 1`] = `
+Array [
+  Array [
+    Object {
+      "data": Object {},
+      "type": "foo",
+      "width": 12,
+    },
+    Object {},
+  ],
+]
+`;
+
+exports[`IdoModel should ignore a palette drop it doesn't understand 1`] = `Array []`;
+
+exports[`IdoModel should ignore drops it doesn't understand 1`] = `
+Array [
+  Array [
+    Object {},
+  ],
+]
+`;
